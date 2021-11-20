@@ -1,17 +1,18 @@
 package com.example;
 
 import akka.actor.typed.ActorSystem;
+import com.example.msg.HelloMessage;
 
 import java.io.IOException;
 
 public class AkkaQuickstart {
     public static void main(String[] args) {
         //#actor-system
-        final ActorSystem<GreeterMain.HelloMessage> greeterMain = ActorSystem.create(GreeterMain.create(), "helloakka");
+        final ActorSystem<HelloMessage> greeterMain = ActorSystem.create(GreeterMain.create(), "helloakka");
         //#actor-system
 
         //#main-send-messages
-        greeterMain.tell(new GreeterMain.HelloMessage("Charles"));
+        greeterMain.tell(new HelloMessage("Charles"));
         //#main-send-messages
 
         try {
