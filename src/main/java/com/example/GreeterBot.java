@@ -17,7 +17,7 @@ public class GreeterBot extends AbstractBehavior<Greeter.GreetedMessage> {
         this.max = max;
     }
 
-    //收到消息之后触发的方法
+    //收到消息之后触发的方法，这里onMessage方法的第一个参数指定了消息的类型，如果是GreetedMessage类型的消息就执行后面的Function，除了onMessage方法还有onMessageEquals，也就是收到指定字符串的消息时
     @Override
     public Receive<Greeter.GreetedMessage> createReceive() {
         return newReceiveBuilder().onMessage(Greeter.GreetedMessage.class, this::onGreeted).build();
