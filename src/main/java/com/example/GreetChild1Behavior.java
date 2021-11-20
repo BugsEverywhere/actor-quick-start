@@ -5,13 +5,13 @@ import akka.actor.typed.javadsl.*;
 import com.example.msg.GreetMessage;
 import com.example.msg.RespondMessage;
 
-public class GreetChild1 extends AbstractBehavior<GreetMessage> {
+public class GreetChild1Behavior extends AbstractBehavior<GreetMessage> {
 
   public static Behavior<GreetMessage> create() {
-    return Behaviors.setup(GreetChild1::new);
+    return Behaviors.setup(GreetChild1Behavior::new);
   }
 
-  private GreetChild1(ActorContext<GreetMessage> context) {
+  private GreetChild1Behavior(ActorContext<GreetMessage> context) {
     super(context);
   }
 

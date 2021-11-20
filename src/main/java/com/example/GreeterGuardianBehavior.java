@@ -8,7 +8,7 @@ import com.example.msg.GreetMessage;
 import com.example.msg.HelloMessage;
 import com.example.msg.RespondMessage;
 
-public class GreeterMain extends AbstractBehavior<HelloMessage> {
+public class GreeterGuardianBehavior extends AbstractBehavior<HelloMessage> {
 
     //持有一个消息接受者的引用，同时这个消息接收者Actor也是自己的子Actor
     private final ActorRef<GreetMessage> child1;
@@ -18,16 +18,16 @@ public class GreeterMain extends AbstractBehavior<HelloMessage> {
         return Behaviors.setup(new Function<ActorContext<HelloMessage>, Behavior<HelloMessage>>() {
             @Override
             public Behavior<HelloMessage> apply(ActorContext<HelloMessage> context) {
-                return new GreeterMain(context);
+                return new GreeterGuardianBehavior(context);
             }
         });
     }
 
-    private GreeterMain(ActorContext<HelloMessage> context) {
+    private GreeterGuardianBehavior(ActorContext<HelloMessage> context) {
         super(context);
         //作为父Actor创建一个子Actor
         //#create-actors
-        child1 = context.spawn(GreetChild1.create(), "greeter");
+        child1 = context.spawn(GreetChild1Behavior.create(), "greeter");
         //#create-actors
     }
 
@@ -39,7 +39,7 @@ public class GreeterMain extends AbstractBehavior<HelloMessage> {
     //收到一条来自Guardian Actor的SayHello消息之后触发的方法，在createReceive中调用
     private Behavior<HelloMessage> onSayHello(HelloMessage msg) {
         //#create-actors
-        ActorRef<RespondMessage> child2 = getContext().spawn(GreetChild2.create(3), msg.name);
+        ActorRef<RespondMessage> child2 = getContext().spawn(GreetChild2Behavior.create(3), msg.name);
         child1.tell(new GreetMessage(msg.name, child2));
         //#create-actors
         return this;

@@ -5,16 +5,16 @@ import akka.actor.typed.javadsl.*;
 import com.example.msg.GreetMessage;
 import com.example.msg.RespondMessage;
 
-public class GreetChild2 extends AbstractBehavior<RespondMessage> {
+public class GreetChild2Behavior extends AbstractBehavior<RespondMessage> {
 
     public static Behavior<RespondMessage> create(int max) {
-        return Behaviors.setup(context -> new GreetChild2(context, max));
+        return Behaviors.setup(context -> new GreetChild2Behavior(context, max));
     }
 
     private final int max;
     private int greetingCounter;
 
-    private GreetChild2(ActorContext<RespondMessage> context, int max) {
+    private GreetChild2Behavior(ActorContext<RespondMessage> context, int max) {
         super(context);
         this.max = max;
     }
