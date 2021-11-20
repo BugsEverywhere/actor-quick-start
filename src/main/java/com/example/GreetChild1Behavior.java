@@ -17,13 +17,13 @@ public class GreetChild1Behavior extends AbstractBehavior<GreetMessage> {
 
   @Override
   public Receive<GreetMessage> createReceive() {
-    return newReceiveBuilder().onMessage(GreetMessage.class, this::onGreet).build();
+    return newReceiveBuilder().onMessage(GreetMessage.class, this::behave).build();
   }
 
-  private Behavior<GreetMessage> onGreet(GreetMessage command) {
-    getContext().getLog().info("Hello {}!", command.whom);
+  private Behavior<GreetMessage> behave(GreetMessage msg) {
+    getContext().getLog().info("Hello {}!", msg.fromWhom);
     //#greeter-send-message
-    command.replyTo.tell(new RespondMessage(command.whom, getContext().getSelf()));
+    msg.fromWhomActor.tell(new RespondMessage("child1", getContext().getSelf()));
     //#greeter-send-message
     return this;
   }

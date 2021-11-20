@@ -9,12 +9,12 @@ import java.util.Objects;
  */
 //收到对端消息之后，将自身作为GreetedMessage发送回去，消息中包含自己的ActorRef引用
 public final class RespondMessage {
-    public final String whom;
-    public final ActorRef<GreetMessage> from;
+    public final String fromWhom;
+    public final ActorRef<GreetMessage> fromWhomActor;
 
-    public RespondMessage(String whom, ActorRef<GreetMessage> from) {
-        this.whom = whom;
-        this.from = from;
+    public RespondMessage(String fromWhom, ActorRef<GreetMessage> fromWhomActor) {
+        this.fromWhom = fromWhom;
+        this.fromWhomActor = fromWhomActor;
     }
 
     //// #greeter
@@ -27,20 +27,20 @@ public final class RespondMessage {
             return false;
         }
         RespondMessage greeted = (RespondMessage) o;
-        return Objects.equals(whom, greeted.whom) &&
-                Objects.equals(from, greeted.from);
+        return Objects.equals(fromWhom, greeted.fromWhom) &&
+                Objects.equals(fromWhomActor, greeted.fromWhomActor);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(whom, from);
+        return Objects.hash(fromWhom, fromWhomActor);
     }
 
     @Override
     public String toString() {
-        return "Greeted{" +
-                "whom='" + whom + '\'' +
-                ", from=" + from +
+        return "Respond{" +
+                "fromWhom='" + fromWhom + '\'' +
+                ", fromWhomActor=" + fromWhomActor +
                 '}';
     }
 // #greeter
