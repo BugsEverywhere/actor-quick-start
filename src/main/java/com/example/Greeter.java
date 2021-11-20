@@ -10,20 +10,20 @@ public class Greeter extends AbstractBehavior<Greeter.GreetMessage> {
   //监听对端发过来的消息就是GreetMessage类型，里面包含一个ActorRef引用，就是对端的引用
   public static final class GreetMessage {
     public final String whom;
-    public final ActorRef<GreetedMessage> replyTo;
+    public final ActorRef<RespondMessage> replyTo;
 
-    public GreetMessage(String whom, ActorRef<GreetedMessage> replyTo) {
+    public GreetMessage(String whom, ActorRef<RespondMessage> replyTo) {
       this.whom = whom;
       this.replyTo = replyTo;
     }
   }
 
   //收到对端消息之后，将自身作为GreetedMessage发送回去，消息中包含自己的ActorRef引用
-  public static final class GreetedMessage {
+  public static final class RespondMessage {
     public final String whom;
     public final ActorRef<GreetMessage> from;
 
-    public GreetedMessage(String whom, ActorRef<GreetMessage> from) {
+    public RespondMessage(String whom, ActorRef<GreetMessage> from) {
       this.whom = whom;
       this.from = from;
     }
@@ -73,7 +73,7 @@ public class Greeter extends AbstractBehavior<Greeter.GreetMessage> {
   private Behavior<GreetMessage> onGreet(GreetMessage command) {
     getContext().getLog().info("Hello {}!", command.whom);
     //#greeter-send-message
-    command.replyTo.tell(new GreetedMessage(command.whom, getContext().getSelf()));
+    command.replyTo.tell(new RespondMessage(command.whom, getContext().getSelf()));
     //#greeter-send-message
     return this;
   }

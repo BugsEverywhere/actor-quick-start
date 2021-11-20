@@ -43,7 +43,7 @@ public class GreeterMain extends AbstractBehavior<GreeterMain.HelloMessage> {
     //收到一条来自Guardian Actor的SayHello消息之后触发的方法，在createReceive中调用
     private Behavior<HelloMessage> onSayHello(HelloMessage command) {
         //#create-actors
-        ActorRef<Greeter.GreetedMessage> replyTo =
+        ActorRef<Greeter.RespondMessage> replyTo =
                 getContext().spawn(GreeterBot.create(3), command.name);
         greeter.tell(new Greeter.GreetMessage(command.name, replyTo));
         //#create-actors
